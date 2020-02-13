@@ -1,5 +1,7 @@
 # vue-travel
 
+`xiaoge` `dahai`
+
 > A Vue.js project
 
 ## Build Setup
