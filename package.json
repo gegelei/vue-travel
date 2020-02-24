@@ -12,6 +12,7 @@
   "dependencies": {
     "fastclick": "^1.0.6",
     "google-protobuf": "^3.11.4",
+    "protobufjs": "^6.8.8",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.2",
