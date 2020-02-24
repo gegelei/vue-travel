@@ -6,8 +6,12 @@ person.setEmail('1559843332@qq.com')
 
 console.log(person)
 
+console.log("************************")
+
 var bytes = person.serializeBinary()
 
 console.log(pb.Person.deserializeBinary(bytes))
+
+console.log("************************")
 //[8, 1, 18, 3, 99, 104, 121] 后端返回的byte数组
 console.log(pb.Person.deserializeBinary([8, 1, 18, 3, 99, 104, 121]))
