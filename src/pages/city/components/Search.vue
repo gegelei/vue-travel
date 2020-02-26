@@ -6,7 +6,7 @@
 <!--    搜索内容展示框-->
     <div class="searchContent" v-show="citySearch">
       <ul>
-        <li class="search-item" v-for="item in list" :key="item.id">{{item.name}}</li>
+        <li class="search-item" v-for="item in list" :key="item.id" @click="handleNowCity(item.name)">{{item.name}}</li>
         <li v-show="hasNoData" >没有找到匹配的数据</li>
       </ul>
 
@@ -25,6 +25,14 @@
         citySearch: '',
         list: [],
         timer: null,
+      }
+    },
+    methods: {
+      handleNowCity (NowCity) {
+        //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
+        this.$store.dispatch('changeCity', NowCity);
+      //  改变搜索展示框的显示状态
+        this.citySearch = '';
       }
     },
     mounted() {
