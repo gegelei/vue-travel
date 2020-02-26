@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import personPb from '../../proto/protobuf/proto'
+  import personPb from '../../proto/proto'
 
   export default {
     name: 'List',
