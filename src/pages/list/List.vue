@@ -1,5 +1,5 @@
 <template>
-  <div>list</div>
+  <div>list demo测试页</div>
 </template>
 
 <script>
