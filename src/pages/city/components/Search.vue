@@ -4,7 +4,7 @@
       <input class="search-inp" type="text" placeholder="输入城市名或拼音" v-model="citySearch">
     </div>
 <!--    搜索内容展示框-->
-    <div class="searchContent">
+    <div class="searchContent" v-show="citySearch">
       <ul>
         <li class="search-item" v-for="item in list" :key="item.id">{{item.name}}</li>
         <li v-show="hasNoData" >没有找到匹配的数据</li>
@@ -84,11 +84,12 @@
     bottom: 0
     left: 0
     right: 0
-    background: red
+    background: #efecec
     z-index: 1
     top: 1.78rem
     .search-item
       line-height .76rem
       padding-left .2rem
+
 
 </style>
