@@ -1,16 +1,19 @@
 <template>
     <div class="recommands" >
       <div class="maylike">猜你喜欢</div>
-      <ul>
-        <li class="recommand" v-for="(item, index) in recommandList" :key="item.id">
-            <img  class="recommand-img" :src="item.imgurl" alt="">
-          <div class="rec-info">
-            <p class="rec-introduction">{{item.introduction}}</p>
-            <p class="rec-desc">{{item.desc}}</p>
-            <button class="rec-button">查看详情</button>
-          </div>
-        </li>
-      </ul>
+        <ul>
+          <!--     :to="'/Detail/' + item.id"  用来控制动态路由，只需要在定义路由时添加:id即可   -->
+          <router-link v-for="(item, index) in recommandList" :key="item.id" :to="'/Detail/' + item.id">
+          <li class="recommand" >
+              <img  class="recommand-img" :src="item.imgurl" alt="">
+            <div class="rec-info">
+              <p class="rec-introduction">{{item.introduction}}</p>
+              <p class="rec-desc">{{item.desc}}</p>
+              <button class="rec-button">查看详情</button>
+            </div>
+          </li>
+          </router-link>
+        </ul>
     </div>
 
 </template>

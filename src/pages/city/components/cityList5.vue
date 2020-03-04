@@ -1,18 +1,18 @@
 <template>
-    <div  class="citylist" ref="wrapper">
+    <div  class="list" ref="wrapper">
       <div>
         <div class="area">
-          <div class=" title border-topbottom" >当前城市</div>
-          <div class="list-now">
-            <div class="list-button">
+          <div class="title border-topbottom" >当前城市</div>
+          <div class="button-list">
+            <div class="button-wrapper">
               <div class="button">{{this.$store.state.city}}</div>
             </div>
           </div>
         </div>
         <div class="area">
-          <div class=" title border-topbottom" >热门城市</div>
-          <div class="list-hot">
-            <div class="list-button"
+          <div class="title border-topbottom" >热门城市</div>
+          <div class="button-list">
+            <div class="button-wrapper"
                  v-for="item of hotCities"
                  :key="item.id"
                  @click="handleNowCity(item.name)"
@@ -24,13 +24,21 @@
           </div>
         </div>
         <div class="area" v-for="(item,key) of cities" :key="key" :ref="key">
-          <div class=" title border-topbottom" >{{key}}</div>
-          <div class="list" >
-            <div class="list-every border-topbottom"  v-for="city of item" @click="handleNowCity(city.name)" >
+          <div class="title border-topbottom" >{{key}}</div>
+          <div class="item-list" >
+            <div class="item border-bottom"  v-for="city of item" @click="handleNowCity(city.name)" >
               {{city.name}}
             </div>
           </div>
         </div>
+<!--        <div class="area"  :ref="'G'" >-->
+<!--          <div class=" title border-topbottom" >AA</div>-->
+<!--          <div class="list" >-->
+<!--            <div class="list-every border-topbottom"  >-->
+<!--             BB-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
 </template>
@@ -75,40 +83,41 @@
 
 <style scoped lang="stylus">
   @import "~@styles/varibles.styl"
-
-  .citylist
-    line-height .44rem;
-    top: 1.78rem
+  .border-topbottom
+    &:before
+      border-color: #ccc
+    &:after
+      border-color: #ccc
+  .border-bottom
+    &:before
+      border-color: #ccc
+  .list
+    overflow: hidden
+    position: absolute
+    top: 1.58rem
     left: 0
     right: 0
     bottom: 0
-    overflow hidden
-    position: absolute;
     .title
-      background #eaeaea
-      padding-left .2rem
-      font-size .28rem
-    .border-topbottom
-      &:before
-        border-color #ccc
-      &:after
-        border-color #ccc
-    .list-hot, .list-now
-      overflow hidden
-      padding: .1rem
-      margin-right: .2rem
-      .list-button
-        width 33.3%
-        float left
+      line-height: .54rem
+      background: #eee
+      padding-left: .2rem
+      color: #666
+      font-size: .26rem
+    .button-list
+      overflow: hidden
+      padding: .1rem .6rem .1rem .1rem
+      .button-wrapper
+        float: left
+        width: 33.33%
         .button
-            margin .1rem
-            padding .1rem 0
-            line-height .5rem
-            border .01rem solid #ccc
-            border-radius .06rem
-            text-align center
-    .list
-      .list-every
-        line-height .76rem
-        padding-left .2rem
+          margin: .1rem
+          padding: .1rem 0
+          text-align: center
+          border: .02rem solid #ccc
+          border-radius: .06rem
+    .item-list
+      .item
+        line-height: .76rem
+        padding-left: .2rem
 </style>
