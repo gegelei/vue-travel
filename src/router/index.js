@@ -22,17 +22,17 @@ export default new Router({
       component: List
     },
     {
-      path: '/test',
-      name: 'test',
+      path: '/swiperTest',
+      name: 'SwiperTest',
       component: SwiperTest
     },
     {
-      path: '/City',
+      path: '/city',
       name: 'City',
       component: City
     },
     {
-      path: '/Detail/:id',
+      path: '/detail/:id',
       name: 'Detail',
       component: Detail
     }
