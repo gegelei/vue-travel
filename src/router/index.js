@@ -5,6 +5,7 @@ import List from '../pages/list/List'
 import SwiperTest from '../pages/list/SwiperTest'
 import City from '../pages/city/City'
 import Detail from '../pages/detail/Detail'
+import Photo from '../pages/photo/photo'
 
 Vue.use(Router)
 
@@ -22,17 +23,22 @@ export default new Router({
       component: List
     },
     {
-      path: '/test',
-      name: 'test',
+      path: '/swiperTest',
+      name: 'SwiperTest',
       component: SwiperTest
     },
     {
-      path: '/City',
+      path: '/city',
       name: 'City',
       component: City
     },
     {
-      path: '/Detail/:id',
+      path: '/photo',
+      name: 'Photo',
+      component: Photo
+    },
+    {
+      path: '/detail/:id',
       name: 'Detail',
       component: Detail
     }
