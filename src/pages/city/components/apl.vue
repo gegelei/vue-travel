@@ -1,7 +1,7 @@
 <template>
       <ul class="apl">
         <li class="item"
-            v-for="(item,key) of cities" :key="key"
+            v-for="(item,key) of cities" :key="key" :class="{itemNew:key==isshow}"
             @click="handleCityClic(key)">{{key}}
         </li>
 
@@ -19,12 +19,13 @@
     },
     data () {
       return {
-
+        isshow: 0
       }
     },
     methods: {
       handleCityClic (apl) {
         this.$store.dispatch('changeApl', apl);
+        this.isshow = apl
       }
     },
     mounted () {
@@ -48,5 +49,8 @@
     text-align: center;
     .item
       line-height: .38rem;
+    .itemNew
+      background: #ccc
+
 
 </style>
