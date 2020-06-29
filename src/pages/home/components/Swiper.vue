@@ -28,8 +28,11 @@
           imgUrl: 'https://mp-piao-admincp.qunarzz.com/mp_piao_admin_mp_piao_admin/admin/201912/0b26e9760c2673c63c05e1efce1275ea.jpg_750x200_495c0a72.jpg'
         }, {
           id: '2',
-          imgUrl: 'https://mp-piao-admincp.qunarzz.com/mp_piao_admin_mp_piao_admin/admin/20201/be6871c9b0b0ffab3ef2a86fa9688677.jpg'
-        },]
+          imgUrl: 'http://source.qunarzz.com/site/images/wns/20200602_qunar_dujia_homepage_750x192_6.jpg'
+        }, {
+          id: '3',
+          imgUrl: 'http://source.qunarzz.com/site/images/wns/20200608_qunar_dujia_750x192_1.jpg'
+        }]
       }
     }
   }
@@ -38,6 +41,7 @@
 <style scoped lang="stylus">
   .wrapper >>> .swiper-pagination-bullet-active
     background #ffffff !important
+
   .wrapper
     overflow hidden
     width 100%
