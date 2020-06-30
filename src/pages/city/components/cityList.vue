@@ -64,7 +64,6 @@
       handleNowCity (NowCity) {
         //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
         this.$store.dispatch('changeCity', NowCity)
-        this.scroll.scrollToElement(this.$refs.B[0])
       }
     },
     mounted () {
@@ -76,18 +75,11 @@
 
       console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)
 
-      window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
-
-      console.log(this.scroll)
+      // window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
 
       this.scroll.on('scroll', (pos) => {
         console.log('y:', Math.abs(Math.round(pos.y)))
       })
-      // this.listScroll.on('scroll', (pos) => {
-      //   // 使用abs绝对值（否则 pos.y拿到值是负数）
-      //   let scrollY = )
-      //   console.log(scrollY)
-      // })
 
     },
     watch: {
