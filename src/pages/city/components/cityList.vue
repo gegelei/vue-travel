@@ -36,64 +36,79 @@
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
+import BScroll from 'better-scroll'
+import {debounce} from '@/utils/index.js'
 
-  export default {
-    name: 'cityList',
-    props: {
-      hotCities: Array,
-      cities: ''
-    },
-    data () {
-      return {
-        apl: this.$store.state.apl,
-      }
-    },
-    methods: {
-      haha () {
-        let obj = this.$refs
-        console.log(obj)
-        Object.keys(obj).forEach(function (index) {
-          try {
-            console.log(obj[index][0].getBoundingClientRect().top)
-          } catch (e) {
-          }
-        })
-      },
-
-      handleNowCity (NowCity) {
-        //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
-        this.$store.dispatch('changeCity', NowCity)
-      }
-    },
-    mounted () {
-      this.scroll = new BScroll(this.$refs.wrapper, {
-        click: true,
-        probeType: 2
+export default {
+  name: 'cityList',
+  props: {
+    hotCities: Array,
+    cities: ''
+  },
+  data() {
+    return {
+      apl: this.$store.state.apl,
+      scrollArray: {}
+    }
+  },
+  methods: {
+    haha() {
+      let obj = this.$refs
+      let scrollArray = {}
+      console.log(obj);
+      console.log("wai",this)
+      Object.keys(obj).forEach(function (index) {
+        try {
+          console.log("nei",this)
+          scrollArray[index] = obj[index][0].getBoundingClientRect().top
+          console.log(index, obj[index][0].getBoundingClientRect().top)
+        } catch (e) {
+          // console.log(e)
+        }
       })
-      // this.scroll.scrollToElement(this.$refs['G']);
+      this.scrollArray = scrollArray
+
+    },
+
+    handleNowCity(NowCity) {
+      //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
+      this.$store.dispatch('changeCity', NowCity)
+    }
+  },
+  mounted() {
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      click: true,
+      probeType: 2
+    }),
 
       console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)
 
-      // window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
+    // window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
+    //防抖函数
+    // debounce(function() {
+    this.scroll.on('scroll', (pos) => {
+      console.log('y:', Math.abs(Math.round(pos.y)))
+    })
+    // },300)
 
-      this.scroll.on('scroll', (pos) => {
-        console.log('y:', Math.abs(Math.round(pos.y)))
-      })
+    setTimeout(() => {
+      this.haha();
+      console.log("88", this.scrollArray)
+    }, 2000)
+
+  },
+  watch: {
+    '$store.state.apl': function (newFlag, oldFlag) {
+      //todo: 点击字母，跳转对应的字母块
+      // console.log(this.$refs[newFlag][0]);
+      // console.log(this.$refs['G']);
+      // this.scroll.scrollToElement(this.$refs['G']);
+
+      this.scroll.scrollToElement(this.$refs[newFlag][0])
 
     },
-    watch: {
-      '$store.state.apl': function (newFlag, oldFlag) {
-        //todo: 点击字母，跳转对应的字母块
-        // console.log(this.$refs[newFlag][0]);
-        // console.log(this.$refs['G']);
-        // this.scroll.scrollToElement(this.$refs['G']);
-
-        this.scroll.scrollToElement(this.$refs[newFlag][0])
-
-      },
-    }
   }
+}
 </script>
 
 <style scoped lang="stylus">
