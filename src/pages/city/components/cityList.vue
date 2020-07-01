@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="area">
-        <div class="title border-topbottom" ref="aaa" @click="haha">热门城市</div>
+        <div class="title border-topbottom" ref="aaa" @click="handleLetter">热门城市</div>
         <div class="list-hot">
           <div class="list-button"
                v-for="item of hotCities"
@@ -50,44 +50,78 @@
       }
     },
     methods: {
-      haha () {
+      handleLetter () {
         let obj = this.$refs
-        console.log(obj)
+        // 保存letter对象
+        let letter = {}
         Object.keys(obj).forEach(function (index) {
           try {
-            console.log(obj[index][0].getBoundingClientRect().top)
+            // console.log(index, obj[index][0].getBoundingClientRect().top)
+            letter[index] = obj[index][0].getBoundingClientRect().top
           } catch (e) {
           }
         })
+        console.log('letter', letter)
+        this.letter = letter
       },
 
       handleNowCity (NowCity) {
         //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
         this.$store.dispatch('changeCity', NowCity)
-        this.scroll.scrollToElement(this.$refs.B[0])
+      },
+
+      handleScrollOnAndEnd (pos) {
+        let y = Math.abs(Math.round(pos.y)) + 89
+        console.log('y:', y)
+        let letter = this.letter
+        var keys = Object.keys(letter)
+        for (let j = 1; j < keys.length; j++) {
+          if (y < letter[keys[0]]) {
+            this.$store.dispatch('selectLetter', keys[j - 1])
+            console.log('选中的字母：', keys[0])
+            return
+          }
+          if (y > letter[keys[j - 1]] && y < letter[keys[j]]) {
+            console.log('选中的字母：', keys[j - 1])
+            this.$store.dispatch('selectLetter', keys[j - 1])
+            return
+          }
+        }
       }
     },
     mounted () {
       this.scroll = new BScroll(this.$refs.wrapper, {
-        click: true,
-        probeType: 2
+        click: true,// 出发点击事件
+        probeType: 2// 派发滚动事件
       })
-      // this.scroll.scrollToElement(this.$refs['G']);
+      // 根据元素获取高度
+      // console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)
+      // 此方法行不通
+      // window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
 
-      console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)
-
-      window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
-
-      console.log(this.scroll)
-
+      // 监听滚动事件
       this.scroll.on('scroll', (pos) => {
-        console.log('y:', Math.abs(Math.round(pos.y)))
+        // 需要用abs，否则获取的是负数
+        // console.log('y:', Math.abs(Math.round(pos.y)))
+        this.i = 0
+        // 节流函数
+        setTimeout(() => {
+          this.i = this.i + 1
+          if (this.i == 1) {
+            this.handleScrollOnAndEnd(pos)
+          }
+        }, 100)
       })
-      // this.listScroll.on('scroll', (pos) => {
-      //   // 使用abs绝对值（否则 pos.y拿到值是负数）
-      //   let scrollY = )
-      //   console.log(scrollY)
-      // })
+
+      // 监听滚动结束事件
+      this.scroll.on('scrollEnd', (pos) => {
+        this.handleScrollOnAndEnd(pos)
+      })
+
+      // 1秒后执行handleLetter方法
+      setTimeout(() => {
+        this.handleLetter()
+      }, 1000)
 
     },
     watch: {
@@ -96,9 +130,7 @@
         // console.log(this.$refs[newFlag][0]);
         // console.log(this.$refs['G']);
         // this.scroll.scrollToElement(this.$refs['G']);
-
         this.scroll.scrollToElement(this.$refs[newFlag][0])
-
       },
     }
   }

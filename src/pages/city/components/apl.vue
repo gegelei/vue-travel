@@ -1,12 +1,12 @@
 <template>
-      <ul class="apl">
-        <li class="item"
-            v-for="(item,key) of cities" :key="key" :class="{itemNew:key==isshow}"
-            @click="handleCityClic(key)">{{key}}
-        </li>
+  <ul class="apl">
+    <li class="item"
+        v-for="(item,key) of cities" :key="key" :class="{itemNew:key==isshow}"
+        @click="handleCityClic(key)">{{key}}
+    </li>
 
 
-      </ul>
+  </ul>
 </template>
 
 
@@ -24,11 +24,17 @@
     },
     methods: {
       handleCityClic (apl) {
-        this.$store.dispatch('changeApl', apl);
+        this.$store.dispatch('changeApl', apl)
         this.isshow = apl
       }
     },
     mounted () {
+    },
+    watch: {
+      '$store.state.letter': function (newFlag, oldFlag) {
+        console.log('old', oldFlag, 'new', newFlag)
+        this.isshow = newFlag
+      },
     }
   }
 </script>
@@ -47,8 +53,10 @@
     bottom: 0;
     top: 1.78rem;
     text-align: center;
+
     .item
       line-height: .38rem;
+
     .itemNew
       background: #ccc
 
