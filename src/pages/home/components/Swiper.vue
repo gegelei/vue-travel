@@ -21,6 +21,9 @@
           pagination: {
             el: '.swiper-pagination'
           },
+          autoplay: {
+            delay: 1500
+          },
           loop: true,
         },
         swiperList: [{
