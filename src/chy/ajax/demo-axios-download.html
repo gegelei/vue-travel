@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.20.0-0/axios.min.js"></script>
+
+</head>
+<body>
+
+<script>
+
+
+  function learn () {
+    let data = {
+      'pageSize': 10,
+      'sportId': 'sr:sport:1',
+      'producer': 3,
+      'country': 'ke'
+    }
+
+    axios({
+      method: 'get',
+      // url: 'https://bet-api.gbank.team/api/bet/print/download',
+      url: 'http://127.0.0.1:9090/api/bet/print/download',
+      params: data,
+      responseType: 'blob'
+    }).then((res) => {
+        console.log('headers', res.headers)
+        let fileName = res.headers['content-disposition'].split('=')[1]
+        downloadFile(res.data, fileName)
+      }
+    )
+  }
+
+  function downloadFile (data, fileName) {
+    // 文件导出
+    if (!data) {
+      return
+    }
+    let url = window.URL.createObjectURL(new Blob([data], { type: 'application/pdf' }))
+
+    const a = document.createElement('a')
+    a.style.display = 'none'
+    a.download = fileName
+    a.href = url
+    a.click()
+    if (document.body.contains(a)) {
+      document.body.removeChild(a)
+    }
+  }
+
+
+</script>
+
+<div>
+    <button onclick="learn()">下载pdf</button>
+</div>
+
+</body>
+</html>

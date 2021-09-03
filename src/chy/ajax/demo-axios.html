@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="./axios.min.js"></script>
+
+</head>
+<body>
+
+<div>
+    <button onclick="learn()">点我发起请求B695868DFDAFA2FFDD6272EBEEE2B3CF</button>
+    <div id="hello">B695868DFDAFA2FFDD6272EBEEE2B3CF</div>
+</div>
+
+<script>
+
+    function learn () {
+        let data = document.getElementById('hello')
+        axios({
+            url: 'https://10.153.80.4:8084/mkd/md5',
+            method: 'post',
+            data: [data],
+            header: {
+                "Content-Type" : "application/json",
+                "requiredKey": "c451f7b8714cab1e3ea87789fd765f6a893fa164"
+            }
+        }).then((res) => {
+            console.log('res', res)
+        })
+
+    }
+</script>
+</body>
+</html>
