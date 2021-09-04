@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+<body>
+<script>
+  $(function () {
+
+    let data = {
+      'account': '2347131313131',
+      'password': '33e1c9a50b6ea74622c9019d0e09f04e',
+      'platform': 3,
+      'device': { 'udid': '2347131313131' }
+    }
+
+    $('#btn').click(function () {
+      $.ajax({
+        url: 'https://10.153.80.4:8084/mkd/md5',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        success: function (res) {//res表示是否与服务器连接成功
+          console.log(res)//json中的数据
+        },
+        error: function (e) {
+          console.log(e)//抛弃异常
+        }
+      })
+    })
+
+  })
+
+</script>
+<div>
+    <button id="btn">点我发起请求</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fetch</title>
+</head>
+<body>
+<h1>fetch</h1>
+<script>
+  // windows自带的方法
+  fetch('http://java.chendahai.cn/region/regionList?pid=0').then(res => {
+    console.log('fetch then', res)
+    // console.log(res.text()) // promise
+    return res.text()
+  }).then(res => {
+    console.log('fetch then then', res)
+  })
+
+</script>
+</body>
+</html>

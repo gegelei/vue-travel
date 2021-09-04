@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="area">
-        <div class="title border-topbottom" ref="aaa" @click="handleLetter">热门城市</div>
+        <div class="title border-topbottom" ref="aaa" @click="haha">热门城市</div>
         <div class="list-hot">
           <div class="list-button"
                v-for="item of hotCities"
@@ -36,104 +36,79 @@
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
+import BScroll from 'better-scroll'
+import {debounce} from '@/utils/index.js'
 
-  export default {
-    name: 'cityList',
-    props: {
-      hotCities: Array,
-      cities: ''
-    },
-    data () {
-      return {
-        apl: this.$store.state.apl,
-      }
-    },
-    methods: {
-      handleLetter () {
-        let obj = this.$refs
-        // 保存letter对象
-        let letter = {}
-        Object.keys(obj).forEach(function (index) {
-          try {
-            // console.log(index, obj[index][0].getBoundingClientRect().top)
-            letter[index] = obj[index][0].getBoundingClientRect().top
-          } catch (e) {
-          }
-        })
-        console.log('letter', letter)
-        this.letter = letter
-      },
-
-      handleNowCity (NowCity) {
-        //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
-        this.$store.dispatch('changeCity', NowCity)
-      },
-
-      handleScrollOnAndEnd (pos) {
-        let y = Math.abs(Math.round(pos.y)) + 89
-        console.log('y:', y)
-        let letter = this.letter
-        var keys = Object.keys(letter)
-        for (let j = 1; j < keys.length; j++) {
-          if (y < letter[keys[0]]) {
-            this.$store.dispatch('selectLetter', keys[j - 1])
-            console.log('选中的字母：', keys[0])
-            return
-          }
-          if (y > letter[keys[j - 1]] && y < letter[keys[j]]) {
-            console.log('选中的字母：', keys[j - 1])
-            this.$store.dispatch('selectLetter', keys[j - 1])
-            return
-          }
-        }
-      }
-    },
-    mounted () {
-      this.scroll = new BScroll(this.$refs.wrapper, {
-        click: true,// 出发点击事件
-        probeType: 2// 派发滚动事件
-      })
-      // 根据元素获取高度
-      // console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)
-      // 此方法行不通
-      // window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
-
-      // 监听滚动事件
-      this.scroll.on('scroll', (pos) => {
-        // 需要用abs，否则获取的是负数
-        // console.log('y:', Math.abs(Math.round(pos.y)))
-        this.i = 0
-        // 节流函数
-        setTimeout(() => {
-          this.i = this.i + 1
-          if (this.i == 1) {
-            this.handleScrollOnAndEnd(pos)
-          }
-        }, 100)
-      })
-
-      // 监听滚动结束事件
-      this.scroll.on('scrollEnd', (pos) => {
-        this.handleScrollOnAndEnd(pos)
-      })
-
-      // 1秒后执行handleLetter方法
-      setTimeout(() => {
-        this.handleLetter()
-      }, 1000)
-
-    },
-    watch: {
-      '$store.state.apl': function (newFlag, oldFlag) {
-        //todo: 点击字母，跳转对应的字母块
-        // console.log(this.$refs[newFlag][0]);
-        // console.log(this.$refs['G']);
-        // this.scroll.scrollToElement(this.$refs['G']);
-        this.scroll.scrollToElement(this.$refs[newFlag][0])
-      },
+export default {
+  name: 'cityList',
+  props: {
+    hotCities: Array,
+    cities: ''
+  },
+  data() {
+    return {
+      apl: this.$store.state.apl,
+      scrollArray: {}
     }
+  },
+  methods: {
+    haha() {
+      let obj = this.$refs
+      let scrollArray = {}
+      console.log(obj);
+      console.log("wai",this)
+      Object.keys(obj).forEach(function (index) {
+        try {
+          console.log("nei",this)
+          scrollArray[index] = obj[index][0].getBoundingClientRect().top
+          console.log(index, obj[index][0].getBoundingClientRect().top)
+        } catch (e) {
+          // console.log(e)
+        }
+      })
+      this.scrollArray = scrollArray
+
+    },
+
+    handleNowCity(NowCity) {
+      //通过store属性的dispatch方法，调用actions中的方法，来改变state中的数据
+      this.$store.dispatch('changeCity', NowCity)
+    }
+  },
+  mounted() {
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      click: true,
+      probeType: 2
+    }),
+
+      console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)
+
+    // window.addEventListener('scroll', () => {console.log('aaa距离顶部高度', this.$refs.aaa.getBoundingClientRect().top)}, true)
+    //防抖函数
+    // debounce(function() {
+    this.scroll.on('scroll', (pos) => {
+      console.log('y:', Math.abs(Math.round(pos.y)))
+    })
+    // },300)
+
+    setTimeout(() => {
+      this.haha();
+      console.log("88", this.scrollArray)
+    }, 2000)
+
+  },
+  watch: {
+    '$store.state.apl': function (newFlag, oldFlag) {
+      //todo: 点击字母，跳转对应的字母块
+      // console.log(this.$refs[newFlag][0]);
+      // console.log(this.$refs['G']);
+      // this.scroll.scrollToElement(this.$refs['G']);
+
+      this.scroll.scrollToElement(this.$refs[newFlag][0])
+
+    },
   }
+}
 </script>
 
 <style scoped lang="stylus">
