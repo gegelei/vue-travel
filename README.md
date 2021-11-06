@@ -24,3 +24,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 
 开始练习git
+
+git2
